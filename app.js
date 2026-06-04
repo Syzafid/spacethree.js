@@ -11,7 +11,6 @@ const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('c'),
 renderer.setSize(innerWidth, innerHeight);
 renderer.setPixelRatio(devicePixelRatio);
 renderer.shadowMap.enabled = true;
-renderer.xr.enabled = true;
 
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.enableDamping = true;
@@ -35,24 +34,11 @@ floor.position.y = -4;
 floor.receiveShadow = true;
 scene.add(floor);
 
-function makeTex(color1, color2) {
-  const canvas = document.createElement('canvas');
-  canvas.width = canvas.height = 128;
-  const ctx = canvas.getContext('2d');
-  const g = ctx.createRadialGradient(64, 64, 10, 64, 64, 64);
-  g.addColorStop(0, color1);
-  g.addColorStop(1, color2);
-  ctx.fillStyle = g;
-  ctx.fillRect(0, 0, 128, 128);
-  return new THREE.CanvasTexture(canvas);
-}
-
 const objects = [];
-
 
 const matahari = new THREE.Mesh(
   new THREE.SphereGeometry(3, 32, 32),
-  new THREE.MeshStandardMaterial({ map: makeTex('#ffcc00', '#ff4400'), emissive: 0xff8800, emissiveIntensity: 0.6, roughness: 0.8, metalness: 0 })
+  new THREE.MeshStandardMaterial({ color: 0xff4400, emissive: 0xff8800, emissiveIntensity: 0.6, roughness: 0.8, metalness: 0 })
 );
 matahari.castShadow = true;
 matahari.userData.label = 'Matahari';
@@ -71,8 +57,8 @@ scene.add(planet);
 objects.push(planet);
 
 const stasiunISS = new THREE.Mesh(
-  new THREE.BoxGeometry(2, 1, 1),
-  new THREE.MeshStandardMaterial({ color: 0xcccccc, roughness: 0.3, metalness: 0.8 })
+  new THREE.BoxGeometry( 1, 1, 4, 8, 1),
+  new THREE.MeshStandardMaterial({ color: 0xfffffff, roughness: 0.1, metalness: 0.4 })
 );
 stasiunISS.position.set(-8, 2, 5);
 stasiunISS.castShadow = true;
@@ -86,16 +72,27 @@ const nebula = new THREE.Mesh(
   new THREE.TorusGeometry(2, 0.4, 16, 60),
   new THREE.MeshStandardMaterial({ color: 0xaa44ff, roughness: 0.5, metalness: 0.2 })
 );
-nebula.position.set(-5, 3, -8);
+nebula.position.set(-19, 7, -8);
 nebula.castShadow = true;
 nebula.receiveShadow = true;
 nebula.userData.label = 'Ring Nebula';
 scene.add(nebula);
 objects.push(nebula);
 
+const Meteoroid = new THREE.Mesh(
+  new THREE.DodecahedronGeometry(1),
+  new THREE.MeshStandardMaterial({ color: 0x807055, roughness: 0.3, metalness: 0.4 })
+);
+Meteoroid.position.set(8, 5, 0);
+Meteoroid.castShadow = true;
+Meteoroid.receiveShadow = true;
+Meteoroid.userData.label = 'Meteoroid';
+scene.add(Meteoroid);
+objects.push(Meteoroid);
+
 const cone = new THREE.Mesh(
   new THREE.ConeGeometry(0.6, 2.5, 16),
-  new THREE.MeshStandardMaterial({ color: 0xff4422, roughness: 0.4, metalness: 0.5 })
+  new THREE.MeshStandardMaterial({ color: 0x99A38B, roughness: 0.4, metalness: 0.5 })
 );
 cone.position.set(5, 2, 8);
 cone.castShadow = true;
@@ -109,8 +106,6 @@ const mouse = new THREE.Vector2();
 const info = document.getElementById('info');
 let selected = null;
 let hovered = null;
-
-
 
 window.addEventListener('mousemove', e => {
   mouse.x = (e.clientX / innerWidth) * 2 - 1;
@@ -177,6 +172,9 @@ renderer.setAnimationLoop(() => {
 
   nebula.rotation.x += 0.01;
   nebula.rotation.y += 0.005;
+
+  Meteoroid.rotation.x += 0.01;
+  Meteoroid.rotation.y += 0.005;
 
   cone.position.y = 2 + Math.sin(t) * 0.5;
   cone.rotation.y += 0.01;
