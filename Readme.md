@@ -12,7 +12,10 @@ Buka melalui link yGitHub Pages: [https://syzafid.github.io/spacethree.js/](http
 - hover dan klik pada object geometry yang ada untuk melihat perubahan dan melihat informasi
 - lalu untuk deselect bisa klik kembali pada object atau klik pada area kosong
 
-## Dokumentasi
+## Screenshot Dokumentasi
+*Tampilan Object Geometry yang ada pada web*
 ![Screenshot 1](https://github.com/user-attachments/assets/3a2fbfee-6196-464e-8d75-e1c9764fcda5)
+*Tampilan Object Geometry saat di hover*
 ![Screenshot 2](https://github.com/user-attachments/assets/fc5e72a6-b441-46da-bcbb-24d1d9440a10)
+*Tampilan Object Geometry saat di klik menampilkan info*
 ![Screenshot 3](https://github.com/user-attachments/assets/1f01a6d7-f953-4f70-a879-c6b76ddb7460)
